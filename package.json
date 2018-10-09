@@ -1,0 +1,19 @@
+{
+  "name": "fxchange",
+  "version": "1.0.0",
+  "description": "matching engine for currencies pairs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wang0805/fxchange.git"
+  },
+  "author": "wenhao",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wang0805/fxchange/issues"
+  },
+  "homepage": "https://github.com/wang0805/fxchange#readme"
+}
