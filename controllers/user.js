@@ -1,4 +1,5 @@
 var sha256 = require('js-sha256');
+const SALT = "fxchange";
 
 
 module.exports = (db) => {
@@ -12,21 +13,18 @@ module.exports = (db) => {
     response.render('user/newUser');
   };
 
-  const userRoot = (request, response) => {
+  const index = (request, response) => {
     response.clearCookie('user_id');
     response.clearCookie('username');
-    response.cookie('logged_in', false);
+    response.clearCookie('logged_in');
 
-    response.render('user/userLogin');
+
+    response.render('user/index');
   };
 
   const create = (request, response) => {
-    // use user model method `create` to create new user entry in db
+
     db.user.create(request.body, (error, queryResult) => {
-      // queryResult of creation is not useful to us, so we ignore it
-      //console.log("query result:",queryResult);
-      console.log(request.body);
-      // (you can choose to omit it completely from the function parameters)
 
       if (error) {
         console.error('error getting user:', error);
@@ -36,9 +34,6 @@ module.exports = (db) => {
       if (queryResult.rowCount >= 1) {
         console.log('User created successfully');
 
-        // drop cookies to indicate user's logged in status and username
-        response.cookie('logged_in', true);
-        response.cookie('username', request.body.name);
       } else {
         console.log('User could not be created');
       }
@@ -48,9 +43,9 @@ module.exports = (db) => {
     });
   };
 
-  const userLogin = (request, response) => {
+  const login = (request, response) => {
 
-    db.user.userLogin(request.body, (error, result) => {
+    db.user.login(request.body, (error, result) => {
       //console.log(request.body);
       console.log("result controller: ", result.rows);
       if(error) {
@@ -58,17 +53,26 @@ module.exports = (db) => {
       }
 
       else if(result.rows[0]!=undefined){
+
+        let user_id = result.rows[0].id;
+
         if(sha256(request.body.password) === result.rows[0].password){
-          response.clearCookie('logged_in');
-          response.cookie('logged_in', true);
+
+          response.cookie('logged_in', sha256(SALT+user_id));
           response.cookie('username', request.body.name);
-          response.cookie('user_id', result.rows[0].id);
-          response.status(200).redirect('/tweets');
+          response.cookie('user_id', user_id);
+          response.status(200).redirect(`/user/${user_id}/profile`);
         }
         else {response.send("wrong password");}
       }
       else {response.send("no such user");}
     })
+  }
+
+  const profile = (request, response) => {
+
+    //result for transactions, orders and market info shown here
+
   }
 
   /**
@@ -79,8 +83,9 @@ module.exports = (db) => {
   return {
     newForm,
     create,
-    userLogin,
-    userRoot
+    login,
+    index,
+    profile
   };
 
 };

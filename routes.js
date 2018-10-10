@@ -9,9 +9,14 @@ module.exports = (app, db) => {
    *  =========================================
    */
   // CRUD users
-  app.get('/users', users.userRoot);
+  app.get('/users', users.index);
   app.get('/users/new', users.newForm);
   app.post('/users', users.create);
-  app.post('/users/login', users.userLogin);
+  app.post('/users/login', users.login);
+
+  //CRUD orders
+  app.get('users/:id/order/new', order.new);
+
+  app.post('/orders', order.create);
 
 };
