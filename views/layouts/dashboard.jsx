@@ -4,14 +4,14 @@ var React = require('react');
 var Headerlink = require('../user/header');
 var Rightbody = require('../order/rightBody');
 
-class DefaultLayout extends React.Component {
+class Layout extends React.Component {
 
 	render() {
 
 		let displayRightBody;
-		console.log("this props cookies check: ", this.props);
-		if (this.props.logged_in!=undefined) {
-			displayRightBody = <Rightbody order={this.props.order} userid={this.props.userid} loggedin={this.props.loggedin} />;
+		console.log("this props cookies check: ", this.props.cookies);
+		if (this.props.cookies.logged_in!=undefined) {
+			displayRightBody = <Rightbody order={this.props.order} cookies={this.props.cookies} />;
 		}
 		
 		return (
@@ -22,8 +22,8 @@ class DefaultLayout extends React.Component {
 					<link rel="stylesheet" type="text/css" href="/style.css"></link>
 				</head>
 				<body>
-					<Headerlink cookies={this.props} />
-					{displayRightBody}
+					<Headerlink cookies={this.props.cookies} />
+					{displayRightBody}	
 
 					<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 					<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
@@ -34,4 +34,4 @@ class DefaultLayout extends React.Component {
 	}
 }
 
-module.exports = DefaultLayout;
+module.exports = Layout;

@@ -7,10 +7,10 @@ class RightBody extends React.Component {
 
     let orders = this.props.order.map(order => {
       let userId = order.user_id;
-      let aTag = `users/${this.props.userid}/order/${order.id}`;
+      let aTag = `users/${this.props.cookies.user_id}/order/${order.id}`;
       let actionUrl = '/order/'+order.id+'?_method=delete';
 
-      if(parseInt(this.props.userid) === userId && this.props.loggedin === sha256(SALT+this.props.userid)) {
+      if(parseInt(this.props.cookies.user_id) === userId && this.props.cookies.logged_in === sha256(SALT+this.props.cookies.user_id)) {
         return (
           <div>
             <form method="POST" action={actionUrl}>
@@ -43,7 +43,7 @@ class RightBody extends React.Component {
                   <input name="ordertype" value="B" type="hidden" />
                   <input name="price" />
                   <input name="qty" />
-                  <input name="user_id" value={this.props.userid} type="hidden"/>
+                  <input name="user_id" value={this.props.cookies.user_id} type="hidden"/>
                   <input type="submit" value="BUY"/>
                 </form>
               </div>
@@ -53,11 +53,13 @@ class RightBody extends React.Component {
                   <input name="ordertype" value="A" type="hidden" />
                   <input name="price" />
                   <input name="qty" />
-                  <input name="user_id" value={this.props.userid} type="hidden"/>
+                  <input name="user_id" value={this.props.cookies.user_id} type="hidden"/>
                   <input type="submit" value="SELL"/>
                 </form>
               </div>
+              <p/>
               <div>
+                <p>Current orders</p>
                 {orders}
               </div>
             </div>

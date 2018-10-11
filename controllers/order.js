@@ -6,24 +6,6 @@ module.exports = (db) => {
 
 	//var orderStatus = ['active', 'filled', 'cancelled'];
 
-	const index = (request, response) => {
-
-		let user_id = request.cookies.user_id;
-		let login = request.cookies.logged_in;
-
-		db.order.index((error,result) => {
-			if (error) {
-		        console.error('error: ', error);
-		        response.sendStatus(500);
-		    }
-		    else {
-		    	console.log("index order controller: ", result.rows);
-				response.render('layouts/default', {order: result.rows, userid: user_id, loggedin: login});
-		    }
-		})
-	}
-
-
 	const create = (request, response) => {
 
 		console.log("create query: ", request.body);
@@ -172,7 +154,7 @@ module.exports = (db) => {
 				response.sendStatus(500);
 			}
 			else {
-				response.redirect(`/user/${request.cookies.user_id}/profile`)
+				response.redirect(`/user/${request.cookies.user_id}`)
 			}
 		})
 	}	
@@ -185,7 +167,6 @@ module.exports = (db) => {
 	*/
 
 	return {
-		index,
 		create,
 		edit,
 		update,

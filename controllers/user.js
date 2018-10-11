@@ -1,7 +1,6 @@
 var sha256 = require('js-sha256');
 const SALT = "fxchange";
 
-
 module.exports = (db) => {
 
   /**
@@ -13,13 +12,21 @@ module.exports = (db) => {
     response.render('user/newUser');
   };
 
+  //layout for dashboard
   const layout = (request, response) => {
 
     let cookies = request.cookies;
 
-    console.log("request cookies", request.cookies);
-    response.render('layouts/default', cookies);
-
+    db.order.index((error,result) => {
+      if (error) {
+            console.error('error: ', error);
+            response.sendStatus(500);
+        }
+        else {
+          //console.log("index order controller: ", result.rows);
+          response.render('layouts/dashboard', {order: result.rows, cookies: cookies});
+        }
+    })
   };
 
   const create = (request, response) => {
