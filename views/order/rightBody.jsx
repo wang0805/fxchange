@@ -4,7 +4,7 @@ const SALT = "fxchange";
 
 class RightBody extends React.Component {
   render() {
-
+  
     let orders = this.props.order.map(order => {
       let userId = order.user_id;
       let aTag = `users/${this.props.cookies.user_id}/order/${order.id}`;
@@ -20,7 +20,7 @@ class RightBody extends React.Component {
               {order.qty}
               {order.orderstatus} 
               <a href={aTag}>Edit</a> 
-              <button type="submit" class="delete">Delete</button>
+              <button type="submit" class="cancel">Cancel</button>
             </form>
           </div> 
         )
@@ -38,7 +38,7 @@ class RightBody extends React.Component {
           <html>
             <div>
               <div>
-                <form method="POST" action='order/new'>
+                <form method="POST" action='/order/new'>
                   <input name="ticker" placeholder="Enter ticker"/>
                   <input name="ordertype" value="B" type="hidden" />
                   <input name="price" />
@@ -48,7 +48,7 @@ class RightBody extends React.Component {
                 </form>
               </div>
               <div>
-                <form method="POST" action='order/new'>
+                <form method="POST" action='/order/new'>
                   <input name="ticker" placeholder="Enter ticker"/>
                   <input name="ordertype" value="A" type="hidden" />
                   <input name="price" />

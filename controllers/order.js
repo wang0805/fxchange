@@ -11,6 +11,7 @@ module.exports = (db) => {
 		console.log("create query: ", request.body);
 
 		var insert_id;
+		var qtytrans = parseInt(request.body.qty);
 
 		db.order.create(request.body, (error, result) => {
 			if (error) {
@@ -18,7 +19,7 @@ module.exports = (db) => {
 		        response.sendStatus(500);
 		    }
 		    else {
-		    	insert_id = results.rows[0].id;
+		    	insert_id = result.rows[0].id;
 
 		    	//select all previous entries
 				db.order.index( (error, result) => {
@@ -30,13 +31,14 @@ module.exports = (db) => {
 				    	//find if theres any counterparty
 				    	let arrayObj = result.rows;
 						for(let i=0; i<arrayObj.length; i++){
-							if(arrayObj[i].ticker === request.body.ticker && arrayObj[i].ordertype != request.body.ordertype && arrayObj[i].price === request.body.price && request.body.orderstatus==='active') {
-								
-								var qtytrans = request.body.qty;
 
-								if(arrayObj[i].qty >= gtytrans) {
+							console.log("array object console log:", arrayObj[i]);
+
+							if(arrayObj[i].ticker === request.body.ticker && arrayObj[i].ordertype != request.body.ordertype && arrayObj[i].price === request.body.price && arrayObj[i].orderstatus==='active') {
+
+								if(arrayObj[i].qty > qtytrans) {
 									
-									console.log("check types for qty: ", typeof arrayObj[i].qty, typeof qtytrans);
+									console.log("check types for qty: ", typeof arrayObj[i].qty, typeof qtytrans); // both numbers
 									
 									var qty = arrayObj[i].qty - qtytrans;
 									//update new quantity to previous user
@@ -45,72 +47,83 @@ module.exports = (db) => {
 											console.log('error', error);
 											response.sendStatus(500);
 										}
-									})
-									//update filled inserted order
-									db.order.updateMore(insert_id, 0, 'filled', (error, result) => {
-										if (error) {
-											console.log('error', error);
-											response,sendStatus(500);
+										else {
+											//update filled inserted order
+											db.order.updateMore(insert_id, 0, 'filled', (error, result) => {
+												if (error) {
+													console.log('error', error);
+													response,sendStatus(500);
+												}
+												else {
+													//create entry in transactions if user B and FILLED
+													if(request.body.ordertype === 'B'){
+														db.order.createTrans(arrayObj[i].id, insert_id, qtytrans, (error, result) => {
+															if (error) {
+																console.log('error', error);
+																response.sendStatus(500);
+															}
+														})
+													}
+													//create entry in transactions if user Sell and FILLED
+													else if (request.body.ordertype === 'A'){
+														db.order.createTrans(insert_id, arrayObj[i].id, qtytrans, (error, result) => {
+															if (error) {
+																console.log('error', error);
+																response.sendStatus(500);
+															}
+														})
+													}
+												}
+											})
 										}
 									})
-									//create entry in transactions if user B and FILLED
-									if(request.body.ordertype === 'B'){
-										db.transactons.create(arrayObj[i].id, insert_id, qtytrans, (error, result) => {
-											if (error) {
-												console.log('error', error);
-												response.sendStatus(500);
-											}
-										})
-									}
-									//create entry in transactions if user Sell and FILLED
-									else if (request.body.ordertype === 'A'){
-										db.transactons.create(insert_id, arrayObj[i].id, qtytrans, (error, result) => {
-											if (error) {
-												console.log('error', error);
-												response.sendStatus(500);
-											}
-										})
-									}
-
+									break; //can stop the loop since qty can be matched immediately
 								}
-								else if(arrayObj[i].qty < gtytrans) {
+
+								else if(arrayObj[i].qty <= qtytrans) {
 
 									var qtty = qtytrans - arrayObj[i].qty;
 
 									//update to 0 quantity to previous user
-									db.order.updateLess(arrayObj[i].id, 0, 'filled', (error, result) => {
+									db.order.updateLess(arrayObj[i].id, 0, (error, result) => {
 										if (error) {
 											console.log('error', error);
 											response.sendStatus(500);
 										}
-									})
-									db.order.updateLess(arrayObj[i].id, qtty, 'active', (error, result) => {
-										if (error) {
-											console.log('error', error);
-											response.sendStatus(500);
+										else {
+											db.order.updateLess(insert_id, qtty, (error, result) => {
+												if (error) {
+													console.log('error', error);
+													response.sendStatus(500);
+												}
+												else {
+													if(request.body.ordertype === 'B'){
+														db.order.createTrans(arrayObj[i].id, insert_id, arrayObj[i].qty, (error, result) => {
+															if (error) {
+																console.log('error', error);
+																response.sendStatus(500);
+															}
+														})
+													}
+													//create entry in transactions if user Sell and FILLED
+													else if (request.body.ordertype === 'A'){
+														db.order.createTrans(insert_id, arrayObj[i].id, arrayObj[i].qty, (error, result) => {
+															if (error) {
+																console.log('error', error);
+																response.sendStatus(500);
+															}
+														})
+													}
+												}
+											})
 										}
 									})
-																		//create entry in transactions if user B and FILLED
-									if(request.body.ordertype === 'B'){
-										db.transactons.create(arrayObj[i].id, insert_id, qtty, (error, result) => {
-											if (error) {
-												console.log('error', error);
-												response.sendStatus(500);
-											}
-										})
-									}
-									//create entry in transactions if user Sell and FILLED
-									else if (request.body.ordertype === 'A'){
-										db.transactons.create(insert_id, arrayObj[i].id, qtty, (error, result) => {
-											if (error) {
-												console.log('error', error);
-												response.sendStatus(500);
-											}
-										})
-									}
+									if (qtty === 0) { break; } // can stop the loop when theres no remainder to be matched
+									qtytrans = qtty; // update the new quantity when the incoming order isn't fully matched with the first in queue of the same price then loop to find the next in queue of the same price
 								}
 							}
 						}
+						response.redirect(`/users/${request.body.user_id}`); //not rendering well yet - need to refresh to update properly
 				    }
 				})
 
@@ -175,74 +188,3 @@ module.exports = (db) => {
 
 }
 
-
-
-
-		// //select and get results for all orders
-		// db.order.index((error,result) => {
-		// 	if (error) {
-		//         console.error('error: ', error);
-		//         response.sendStatus(500);
-		//     }
-		//     else {
-		//     	//find if theres any counterparty
-		//     	let result.rows  = arrayObj;
-		// 		for(let i=0; i<arrayObj.length; i++){
-		// 			if(arrayObj[i].ticker === request.body.ticker && arrayObj[i].ordertype != request.body.ordertype && arrayObj.price === request.body.price && request.body.orderstatus!='cancelled') {
-						
-		// 				var qtytrans = request.body.qty;
-
-		// 				if(arrayObj[i].qty >= gtytrans) {
-							
-		// 					console.log("check types for qty: ", typeof arrayObj.qty, typeof qtytrans);
-							
-		// 					var qty = arrayObj.qty - qtytrans;
-		// 					//update new quantity to previous user
-		// 					db.order.updateMore(arrayObj.id, qty, (error, result) => {
-		// 						if (error) {
-		// 							console.log('error', error);
-		// 							response.sendStatus(500);
-		// 						}
-		// 					})
-		// 					//insert FILLED order
-		// 					db.order.createMore(request.body, (error, result) => {
-		// 						if (error) {
-		// 							console.log('error', error);
-		// 							response,sendStatus(500);
-		// 						}
-		// 						else {
-		// 							//create entry in transactions if user B and FILLED
-		// 							if(request.body.ordertype === 'B'){
-		// 								db.transactons.create(arrayObj[i].id, result.rows[0].id, qtytrans, (error, result) => {
-		// 									if (error) {
-		// 										console.log('error', error);
-		// 										response,sendStatus(500);
-		// 									}
-		// 								})
-		// 							}
-		// 							//create entry in transactions if user Sell and FILLED
-		// 							else if (request.body.ordertype === 'A'){
-		// 								db.transactons.create(result.rows[0].id, arrayObj[i].id, qtytrans, (error, result) => {
-		// 									if (error) {
-		// 										console.log('error', error);
-		// 										response,sendStatus(500);
-		// 									}
-		// 								})
-		// 							}
-		// 						}
-		// 					})
-
-		// 				}
-		// 				else if(arrayObj[i] < gtytrans) {
-
-		// 					db.order.UpdateLess(arrayObj[i].id, (error, result) => {
-		// 						if (error) {
-		// 							console.log('error', error);
-		// 							response.sendStatus(500);
-		// 						}
-		// 					})
-		// 				}
-		// 			}
-		// 		}
-		//     }
-		// })

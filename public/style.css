@@ -1,0 +1,8 @@
+.cancel {
+	background: transparent;
+	border: none;
+	margin: 0;
+	outline: none;
+	text-decoration: underline;
+	color: blue;
+}

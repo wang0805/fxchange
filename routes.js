@@ -9,10 +9,9 @@ module.exports = (app, db) => {
    *  =========================================
    */
   // CRUD users
-
+  app.get('/users/new', users.newForm); //users/new has to be first other :id will overwrite and new != int
   app.get('/users/:id', users.layout);
   app.get('/users', users.layout);
-  app.get('/users/new', users.newForm);
   app.post('/users', users.create);
   app.post('/users/login', users.login);
 

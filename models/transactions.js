@@ -7,16 +7,6 @@ module.exports = (dbPoolInstance) => {
 		dbPoolInstance.query(query, (error, result) => {
 			callback(error, result);
 			//console.log("select all from orders: ",result.rows);
-		}
-	}
-
-	const create = (a_orderid, b_orderid, qty, callback) => {
-
-		const query = "INSERT INTO transactions (a_orderid, b_orderid, qty) VALUES ($1, $2, $3);";
-		const values = [a_orderid, b_orderid, qty];
-
-		dbPoolInstance.query(query, values, (error, result) => {
-			callback(error, result);
 		})
 	}
 
@@ -31,7 +21,6 @@ module.exports = (dbPoolInstance) => {
 
 	return {
 		index,
-		create,
 		update
 	}
 }
