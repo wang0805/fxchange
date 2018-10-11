@@ -13,19 +13,18 @@ module.exports = (db) => {
     response.render('user/newUser');
   };
 
-  const index = (request, response) => {
-    response.clearCookie('user_id');
-    response.clearCookie('username');
-    response.clearCookie('logged_in');
+  const layout = (request, response) => {
 
+    let cookies = request.cookies;
 
-    response.render('user/index');
+    console.log("request cookies", request.cookies);
+    response.render('layouts/default', cookies);
+
   };
 
   const create = (request, response) => {
 
     db.user.create(request.body, (error, queryResult) => {
-
       if (error) {
         console.error('error getting user:', error);
         response.sendStatus(500);
@@ -61,7 +60,7 @@ module.exports = (db) => {
           response.cookie('logged_in', sha256(SALT+user_id));
           response.cookie('username', request.body.name);
           response.cookie('user_id', user_id);
-          response.status(200).redirect(`/user/${user_id}/profile`);
+          response.status(200).redirect(`/users/${user_id}`);
         }
         else {response.send("wrong password");}
       }
@@ -69,11 +68,6 @@ module.exports = (db) => {
     })
   }
 
-  const profile = (request, response) => {
-
-    //result for transactions, orders and market info shown here
-
-  }
 
   /**
    * ===========================================
@@ -84,8 +78,7 @@ module.exports = (db) => {
     newForm,
     create,
     login,
-    index,
-    profile
+    layout
   };
 
 };

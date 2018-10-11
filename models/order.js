@@ -32,8 +32,8 @@ module.exports = (dbPoolInstance) => {
 
 	const update = (updateObj, callback) => {
 
-		const query = "UPDATE orders SET ordertype=$1, price=$2, qty=$3, orderstatus=$4 WHERE id=$5";
-		const values = [];
+		const query = "UPDATE orders SET price=$1, qty=$2 WHERE id=$3";
+		const values = [updateObj.price, updateObj.qty, updateObj.id];
 
 		dbPoolInstance.query(query, (error, result) => {
 			callback(error, result);
@@ -44,7 +44,7 @@ module.exports = (dbPoolInstance) => {
 	const destroy = (id, callback) => {
 
 		const query = "UPDATE orders SET orderstatus=$1 WHERE id=$2"
-		values = [];
+		values = ['cancelled', id];
 
 		dbPoolInstance.query(query, values, (error, result) => {
 			callback(error, result);
@@ -71,7 +71,6 @@ module.exports = (dbPoolInstance) => {
 		})
 	}
 
-	const update
 
 	return {
 		index,

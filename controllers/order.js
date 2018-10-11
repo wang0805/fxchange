@@ -1,3 +1,6 @@
+const sha256 = require('js-sha256');
+const SALT = "fxchange";
+
 
 module.exports = (db) => {
 
@@ -14,14 +17,12 @@ module.exports = (db) => {
 		        response.sendStatus(500);
 		    }
 		    else {
-				response.render('order/home', {order: result.rows, userid: user_id, loggedin: login});
+		    	console.log("index order controller: ", result.rows);
+				response.render('layouts/default', {order: result.rows, userid: user_id, loggedin: login});
 		    }
 		})
 	}
 
-	const new = (request, response) => {
-		response.render('order/new');
-	}
 
 	const create = (request, response) => {
 
@@ -29,7 +30,7 @@ module.exports = (db) => {
 
 		var insert_id;
 
-		db.order.create(request,body, (error, result) => {
+		db.order.create(request.body, (error, result) => {
 			if (error) {
 		        console.error('error: ', error);
 		        response.sendStatus(500);
@@ -38,26 +39,26 @@ module.exports = (db) => {
 		    	insert_id = results.rows[0].id;
 
 		    	//select all previous entries
-				db.order.index((error,result) => {
+				db.order.index( (error, result) => {
 					if (error) {
 				        console.error('error: ', error);
 				        response.sendStatus(500);
 				    }
 				    else {
 				    	//find if theres any counterparty
-				    	let result.rows  = arrayObj;
+				    	let arrayObj = result.rows;
 						for(let i=0; i<arrayObj.length; i++){
-							if(arrayObj[i].ticker === request.body.ticker && arrayObj[i].ordertype != request.body.ordertype && arrayObj.price === request.body.price && request.body.orderstatus==='active') {
+							if(arrayObj[i].ticker === request.body.ticker && arrayObj[i].ordertype != request.body.ordertype && arrayObj[i].price === request.body.price && request.body.orderstatus==='active') {
 								
 								var qtytrans = request.body.qty;
 
 								if(arrayObj[i].qty >= gtytrans) {
 									
-									console.log("check types for qty: ", typeof arrayObj.qty, typeof qtytrans);
+									console.log("check types for qty: ", typeof arrayObj[i].qty, typeof qtytrans);
 									
-									var qty = arrayObj.qty - qtytrans;
+									var qty = arrayObj[i].qty - qtytrans;
 									//update new quantity to previous user
-									db.order.updateMore(arrayObj.id, qty, 'active', (error, result) => {
+									db.order.updateMore(arrayObj[i].id, qty, 'active', (error, result) => {
 										if (error) {
 											console.log('error', error);
 											response.sendStatus(500);
@@ -158,7 +159,7 @@ module.exports = (db) => {
 				response.sendStatus(500);
 			}
 			else {
-				response.redirect(`/user/${request.body.id}/profile`)
+				response.redirect(`/user/${request.body.id}/`)
 			}
 		})
 	}	
@@ -185,7 +186,6 @@ module.exports = (db) => {
 
 	return {
 		index,
-		new,
 		create,
 		edit,
 		update,
