@@ -123,7 +123,7 @@ module.exports = (db) => {
 								}
 							}
 						}
-						setTimeout(response.redirect(`/users/${request.body.user_id}`),500); //not rendering well yet - need to find the right else statement or settimeout
+						response.redirect(`/users/${request.body.user_id}`); //not rendering well yet - need to find the right else statement or settimeout
 				    }
 				})
 
@@ -170,16 +170,33 @@ module.exports = (db) => {
 			}
 		})
 	}	
-	//destroy is updating orderstatus to cancelled and not removing from array	
-	const cancel = (request, response) => {
 
-		db.order.cancel(request.params.id, (error, result) => {
+	const cfmcancel = (request, response) => {
+
+		//let user_id = request.cookies.user_id;
+		let order_id = request.params.orderid;
+
+		db.order.edit(order_id, (error, result) => {
 			if (error) {
 				console.log('error', error);
 				response.sendStatus(500);
 			}
 			else {
-				response.redirect(`/user/${request.cookies.user_id}`)
+				response.render('order/cancel', result.rows[0]);
+				console.log("results of cancel", result.rows[0]);
+			}
+		})
+	}	
+	//destroy is updating orderstatus to cancelled and not removing from array
+	const cancel = (request, response) => {
+
+		db.order.cancel(request.body.id, (error, result) => {
+			if (error) {
+				console.log('error', error);
+				response.sendStatus(500);
+			}
+			else {
+				response.redirect(`/users/${request.body.user_id}`)
 			}
 		})
 	}	
@@ -195,6 +212,7 @@ module.exports = (db) => {
 		create,
 		edit,
 		update,
+		cfmcancel,
 		cancel
 	}
 

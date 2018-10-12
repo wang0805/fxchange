@@ -3,7 +3,7 @@ var DefaultLayout = require('../layouts/default');
 
 class Edit extends React.Component {
 	render(){
-		var actionUrl = '/order/'+this.props.id+'?_method=PUT';
+		var actionUrl = '/order/'+this.props.id+'/edit?_method=PUT';
 		//console.log(this.props);
 		return(
 			<DefaultLayout title="Edit order" subtitle="EDIT ORDER">

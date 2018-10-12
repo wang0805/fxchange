@@ -8,21 +8,19 @@ class RightBody extends React.Component {
     let orders = this.props.order.map(order => {
       let userId = order.user_id;
       //if you skip the / in front, it will automatically continue from the exisiting path
-      let aTag = `${this.props.cookies.user_id}/order/${order.id}`;
-      let actionUrl = '/order/'+order.id+'?_method=delete';
+      let aTag = `${this.props.cookies.user_id}/order/${order.id}/edit`;
+      let aTagC = `${this.props.cookies.user_id}/order/${order.id}/cancel`;
 
       if(parseInt(this.props.cookies.user_id) === userId && this.props.cookies.logged_in === sha256(SALT+this.props.cookies.user_id)) {
         return (
           <div>
-            <form method="POST" action={actionUrl}>
               {order.ticker}
               {order.ordertype}
               {order.price}
               {order.qty}
               {order.orderstatus} 
               <a href={aTag}>Edit</a> 
-              <button type="submit" class="cancel">Cancel</button>
-            </form>
+              <a href={aTagC}>Cancel</a> 
           </div> 
         )
       }
