@@ -8,7 +8,6 @@ var sha256 = require('js-sha256');
  */
 module.exports = (dbPoolInstance) => {
 
-
   const create = (user, callback) => {
     // run user input password through bcrypt to obtain hashed password
 

@@ -123,7 +123,7 @@ module.exports = (db) => {
 								}
 							}
 						}
-						response.redirect(`/users/${request.body.user_id}`); //not rendering well yet - need to refresh to update properly
+						setTimeout(response.redirect(`/users/${request.body.user_id}`),500); //not rendering well yet - need to find the right else statement or settimeout
 				    }
 				})
 
@@ -133,35 +133,47 @@ module.exports = (db) => {
 
 	const edit = (request, response) => {
 
-		let user_id = request.cookies.user_id;
+		//let user_id = request.cookies.user_id;
+		let order_id = request.params.orderid;
 
-		db.order.edit(user_id, (error, result) => {
+		db.order.edit(order_id, (error, result) => {
 			if (error) {
 				console.log('error', error);
 				response.sendStatus(500);
 			}
 			else {
 				response.render('order/edit', result.rows[0]);
+				console.log("results of edit", result.rows[0]);
 			}
 		})
 	}	
 
 	const update = (request, response) => {
 
+		console.log("request body of update:", request.body)
 		db.order.update(request.body, (error, result) => {
 			if (error) {
-				console.log('error', error);
+				console.log('error at update', error);
 				response.sendStatus(500);
 			}
 			else {
-				response.redirect(`/user/${request.body.id}/`)
+
+				db.order.destroy(request.body.id, (error, result) => {
+					if (error) {
+						console.log('error at update', error);
+						response.sendStatus(500);
+					}
+					else {
+						response.redirect(`/users/${request.body.user_id}`)
+					}
+				})
 			}
 		})
 	}	
 	//destroy is updating orderstatus to cancelled and not removing from array	
-	const destroy = (request, response) => {
+	const cancel = (request, response) => {
 
-		db.order.destroy(request.params.id, (error, result) => {
+		db.order.cancel(request.params.id, (error, result) => {
 			if (error) {
 				console.log('error', error);
 				response.sendStatus(500);
@@ -183,7 +195,7 @@ module.exports = (db) => {
 		create,
 		edit,
 		update,
-		destroy
+		cancel
 	}
 
 }

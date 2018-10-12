@@ -21,28 +21,49 @@ module.exports = (dbPoolInstance) => {
 		})
 	}
 
-	const edit = (id, callback) =>{
+	const edit = (orderid, callback) =>{
 
 		const query = "SELECT * FROM orders WHERE id=$1";
+		const values = [orderid];
 
-		dbPoolInstance.query(query, (error, result) => {
+		dbPoolInstance.query(query, values, (error, result) => {
 			callback(error, result);
 			//console.log("select all from orders where user: ",result.rows);
 		})
 	}
 
+	// const update = (updateObj, callback) => {
+
+	// 	const query = "UPDATE orders SET price=$1, qty=$2 WHERE id=$3;";
+	// 	const values = [updateObj.price, updateObj.qty, updateObj.id];
+
+	// 	dbPoolInstance.query(query, values, (error, result) => {
+	// 		callback(error, result);
+	// 		//console.log("updated orders: ",result.rows);
+	// 	})
+	// }
+
 	const update = (updateObj, callback) => {
 
-		const query = "UPDATE orders SET price=$1, qty=$2 WHERE id=$3";
-		const values = [updateObj.price, updateObj.qty, updateObj.id];
-
-		dbPoolInstance.query(query, (error, result) => {
+		const query = "INSERT INTO orders (ticker, ordertype, price, qty, orderstatus, user_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;";
+		const values = [updateObj.ticker, updateObj.ordertype, updateObj.price, updateObj.qty, 'active', updateObj.user_id];
+	
+		dbPoolInstance.query(query, values, (error, result) => {
 			callback(error, result);
-			//console.log("updated orders: ",result.rows);
 		})
 	}
 
-	const destroy = (id, callback) => {
+	const destroy = (orderid, callback) => {
+
+		const query = "DELETE FROM orders WHERE id=$1;";
+		const values = [orderid];
+
+		dbPoolInstance.query(query, values, (error, result) => {
+			callback(error, result);
+		})
+	}
+
+	const cancel = (id, callback) => {
 
 		const query = "UPDATE orders SET orderstatus=$1 WHERE id=$2"
 		values = ['cancelled', id];
@@ -97,6 +118,7 @@ module.exports = (dbPoolInstance) => {
 		edit,
 		update,
 		destroy,
+		cancel,
 		updateMore,
 		updateLess,
 		createTrans

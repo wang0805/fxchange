@@ -3,7 +3,7 @@ var DefaultLayout = require('../layouts/default');
 
 class Edit extends React.Component {
 	render(){
-		var actionUrl = '/orders/'+this.props.id+'?_method=PUT';
+		var actionUrl = '/order/'+this.props.id+'?_method=PUT';
 		//console.log(this.props);
 		return(
 			<DefaultLayout title="Edit order" subtitle="EDIT ORDER">
@@ -16,6 +16,8 @@ class Edit extends React.Component {
 					<input name="qty" value={this.props.qty} />
 					<p>order type</p>
 					<input name="ordertype" value={this.props.ordertype} readOnly="readonly" />
+					<input name="ticker" value={this.props.ticker} type="hidden"/>
+					<input name="user_id" value={this.props.user_id} type="hidden" />
 					<button class="btn btn-primary btn-lg btn-block" type="submit">Edit</button>
 				</form>
 			</DefaultLayout>

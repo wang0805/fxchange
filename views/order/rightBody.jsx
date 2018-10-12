@@ -7,7 +7,8 @@ class RightBody extends React.Component {
   
     let orders = this.props.order.map(order => {
       let userId = order.user_id;
-      let aTag = `users/${this.props.cookies.user_id}/order/${order.id}`;
+      //if you skip the / in front, it will automatically continue from the exisiting path
+      let aTag = `${this.props.cookies.user_id}/order/${order.id}`;
       let actionUrl = '/order/'+order.id+'?_method=delete';
 
       if(parseInt(this.props.cookies.user_id) === userId && this.props.cookies.logged_in === sha256(SALT+this.props.cookies.user_id)) {
