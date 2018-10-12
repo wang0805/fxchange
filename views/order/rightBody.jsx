@@ -6,6 +6,7 @@ class RightBody extends React.Component {
   render() {
   
     let orders = this.props.order.map(order => {
+      
       let userId = order.user_id;
       //if you skip the / in front, it will automatically continue from the exisiting path
       let aTag = `${this.props.cookies.user_id}/order/${order.id}/edit`;
@@ -21,13 +22,6 @@ class RightBody extends React.Component {
               {order.orderstatus} 
               <a href={aTag}>Edit</a> 
               <a href={aTagC}>Cancel</a> 
-          </div> 
-        )
-      }
-      else { 
-        return (
-          <div>
-            No order records
           </div> 
         )
       }

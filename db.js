@@ -1,6 +1,7 @@
 const pg = require('pg');
 const user = require('./models/user');
 const order = require('./models/order');
+const transactions = require('./models/transactions');
 const url = require('url');
 
 var configs;
@@ -41,6 +42,7 @@ module.exports = {
    */
   user: user(pool),
   order: order(pool),
+  transactions: transactions(pool),
 
 
   //make queries directly from here

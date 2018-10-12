@@ -23,6 +23,8 @@ CREATE TABLE IF NOT EXISTS transactions(
 	id SERIAL PRIMARY KEY,
 	a_orderid INT,
 	b_orderid INT,
+	ticker TEXT,
 	qty INT,
+	price DECIMAL,
 	created_at TIMESTAMP DEFAULT now()
 )	

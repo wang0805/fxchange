@@ -57,7 +57,7 @@ module.exports = (db) => {
 												else {
 													//create entry in transactions if user B and FILLED
 													if(request.body.ordertype === 'B'){
-														db.order.createTrans(arrayObj[i].id, insert_id, qtytrans, (error, result) => {
+														db.order.createTrans(arrayObj[i].id, insert_id, qtytrans, request.body.price, request.body.ticker, (error, result) => {
 															if (error) {
 																console.log('error', error);
 																response.sendStatus(500);
@@ -66,7 +66,7 @@ module.exports = (db) => {
 													}
 													//create entry in transactions if user Sell and FILLED
 													else if (request.body.ordertype === 'A'){
-														db.order.createTrans(insert_id, arrayObj[i].id, qtytrans, (error, result) => {
+														db.order.createTrans(insert_id, arrayObj[i].id, qtytrans, request.body.price, request.body.ticker, (error, result) => {
 															if (error) {
 																console.log('error', error);
 																response.sendStatus(500);
@@ -98,7 +98,7 @@ module.exports = (db) => {
 												}
 												else {
 													if(request.body.ordertype === 'B'){
-														db.order.createTrans(arrayObj[i].id, insert_id, arrayObj[i].qty, (error, result) => {
+														db.order.createTrans(arrayObj[i].id, insert_id, arrayObj[i].qty, request.body.price, request.body.ticker, (error, result) => {
 															if (error) {
 																console.log('error', error);
 																response.sendStatus(500);
@@ -107,7 +107,7 @@ module.exports = (db) => {
 													}
 													//create entry in transactions if user Sell and FILLED
 													else if (request.body.ordertype === 'A'){
-														db.order.createTrans(insert_id, arrayObj[i].id, arrayObj[i].qty, (error, result) => {
+														db.order.createTrans(insert_id, arrayObj[i].id, arrayObj[i].qty, request.body.price, request.body.ticker, (error, result) => {
 															if (error) {
 																console.log('error', error);
 																response.sendStatus(500);

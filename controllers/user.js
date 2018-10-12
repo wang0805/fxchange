@@ -24,7 +24,32 @@ module.exports = (db) => {
         }
         else {
           //console.log("index order controller: ", result.rows);
-          response.render('layouts/dashboard', {order: result.rows, cookies: cookies});
+          let order = result.rows;
+          console.log( "orders   :", order);
+          db.transactions.indexbuy(cookies.user_id, (error, result) => {
+            if (error) {
+              console.error("query error", error);
+              response.sendStatus(500);
+            }
+            else {
+
+              let buytransactions = result.rows;
+              console.log("buy order id    :", buytransactions);
+
+              db.transactions.indexsell(cookies.user_id, (error, result) => {
+                if (error) {
+                  console.error("query error", error);
+                  response.sendStatus(500);
+                }
+                else {
+                  let selltransactions = result.rows;
+                  console.log("sell order id    :", selltransactions);
+
+                  response.render('layouts/dashboard', {order: order, buytransactions: buytransactions, selltransactions: selltransactions, cookies: cookies});
+                }
+              })
+            }
+          })
         }
     })
   };
