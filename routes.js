@@ -18,6 +18,7 @@ module.exports = (app, db) => {
   app.get('/users', users.layout);
 
   app.post('/users', users.create);
+  app.post('/users/logout', users.logout);
   app.post('/users/login', users.login);
   app.post('/order/new', order.create);
 

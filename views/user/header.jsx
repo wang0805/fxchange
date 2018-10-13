@@ -1,9 +1,31 @@
 var React = require("react");
+const sha256 = require('js-sha256');
+const SALT = "fxchange";
 
 class Header extends React.Component {
   render() {
 
-    if(this.props.cookies.logged_in===undefined) {
+    if (this.props.cookies.logged_in === sha256(SALT+this.props.cookies.user_id)) {
+      return( 
+        <html>
+          <header>
+            <div class="card text-center">
+              <div class="card-header">
+                Logged in
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">Welcome!</h5>
+                <p class="card-text">{this.props.cookies.username}</p>
+                <form className ="logout" method="POST" action="/users/logout">
+                  <input class="btn btn-primary mb-2" type="submit" value="Logout" />
+                </form>
+              </div>
+            </div>
+          </header>
+        </html>
+        )
+    }
+    else {
       return (
         <html>
           <header>
@@ -27,15 +49,6 @@ class Header extends React.Component {
             </header>
           </html>
       );
-    }
-    else {
-      return( 
-        <html>
-          <header>
-            <p>logged in, welcome {this.props.cookies.username}</p>
-          </header>
-        </html>
-        )
     }
   }
 }

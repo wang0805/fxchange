@@ -8,15 +8,13 @@ class Rightlower extends React.Component {
     let buytransactions = this.props.buytransactions.map(buy => {
       
       let userIdB = buy.id;
-      //if you skip the / in front, it will automatically continue from the exisiting path
-
       if(parseInt(this.props.cookies.user_id) === userIdB && this.props.cookies.logged_in === sha256(SALT+this.props.cookies.user_id)) {
         return (
-          <div>
-              {buy.ticker}
-              {buy.price}
-              {buy.qty}
-          </div> 
+          <tr>
+              <th scope="row">{buy.ticker}</th>
+              <td>{buy.price}</td>
+              <td>{buy.qty}</td>
+          </tr> 
         )
       }
     })
@@ -24,15 +22,13 @@ class Rightlower extends React.Component {
     let selltransactions = this.props.selltransactions.map(sell => {
       
       let userIdS = sell.id;
-      //if you skip the / in front, it will automatically continue from the exisiting path
-
       if(parseInt(this.props.cookies.user_id) === userIdS && this.props.cookies.logged_in === sha256(SALT+this.props.cookies.user_id)) {
         return (
-          <div>
-              {sell.ticker}
-              {sell.price}
-              {sell.qty}
-          </div> 
+          <tr>
+              <th scope="row">{sell.ticker}</th>
+              <td>{sell.price}</td>
+              <td>{sell.qty}</td>
+          </tr> 
         )
       }
     })
@@ -42,11 +38,35 @@ class Rightlower extends React.Component {
             <div>
               <p/>
               <div>
-                <p>Bought transactions</p>
-                {buytransactions}
-                <p />
-                <p> Sold transactions</p>
-                {selltransactions}
+                <h1>Bought transactions</h1>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Ticker</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">Quantity</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {buytransactions}
+                  </tbody>
+                </table>
+              </div>
+              <p />
+              <div>
+                <h1> Sold transactions</h1>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Ticker</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">Quantity</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {selltransactions}
+                  </tbody>
+                </table>
               </div>
             </div>
           </html>

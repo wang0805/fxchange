@@ -98,8 +98,16 @@ module.exports = (db) => {
       }
       else {response.send("no such user");}
     })
-  }
+  };
 
+  const logout = (request, response) => {
+
+    response.clearCookie('logged_in');
+    response.clearCookie('user_id');
+    response.clearCookie('username');
+
+    response.redirect("/users");    
+  }
 
   /**
    * ===========================================
@@ -110,6 +118,7 @@ module.exports = (db) => {
     newForm,
     create,
     login,
+    logout,
     layout
   };
 
