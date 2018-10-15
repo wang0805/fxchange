@@ -34,7 +34,7 @@ class Edit extends React.Component {
 			<input name="ticker" value={this.props.ticker} type="hidden"/>
 			<input name="user_id" value={this.props.user_id} type="hidden" />
             <div class="form-group row">
-              <button class="btn btn-primary" type="submit">Edit</button>
+              <button class="btn btn-secondary" type="submit">Edit</button>
             </div>
           </form>
         </div>
