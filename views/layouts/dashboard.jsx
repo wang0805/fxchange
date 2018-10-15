@@ -128,6 +128,7 @@ class Layout extends React.Component {
 								</form>
 								<p/>
                                 <div id="myDiv"></div>
+                                <p/>
                                 {displayNewOrder}
                             </div>
                         	<div className='col-lg-5 col-md-12 col-sm-12 col-xs-12'>
