@@ -113,7 +113,7 @@ module.exports = (dbPoolInstance) => {
 	const createTrans = (a_orderid, b_orderid, qty, price, ticker, date, callback) => {
 
 		const query = "INSERT INTO transactions (a_orderid, b_orderid, qty, price, ticker) VALUES ($1, $2, $3, $4, $5);";
-		const values = [a_orderid, b_orderid, qty, price, ticker, date];
+		const values = [a_orderid, b_orderid, qty, price, ticker];
 
 		dbPoolInstance.query(query, values, (error, result) => {
 			callback(error, result);
