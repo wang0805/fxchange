@@ -126,6 +126,7 @@ class Layout extends React.Component {
 									</div>
 								</div>
 								</form>
+								<p/>
                                 <div id="myDiv"></div>
                                 {displayNewOrder}
                             </div>
