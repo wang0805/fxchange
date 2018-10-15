@@ -21,11 +21,21 @@ html, body {
 	display: none;
 }*/
 
-span {
+.join-reg {
 	display: inline-block;
 }
 
-*/
-.login-control {
-	margin-right: 5px;
+.new-order {
+	border: 2px solid black;
+	border-radius: 10px;
+}
+
+.enclosing {
+	padding: 20px 20px;
+}
+
+.headings {
+	font-family: 'Alegreya', serif;
+	font-size: 30px;
+	font-weight: bold;
 }

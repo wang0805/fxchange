@@ -38,13 +38,14 @@ class Rightlower extends React.Component {
             <div>
               <p/>
               <div>
-                <h1>Bought transactions</h1>
+                <div className="headings">BOUGHT TRANSACTIONS</div>
                 <table class="table table-striped table-hover">
                   <thead>
                     <tr>
                       <th class="text-center" scope="col">Ticker</th>
                       <th class="text-center" scope="col">Price</th>
                       <th class="text-center" scope="col">Quantity</th>
+
                     </tr>
                   </thead>
                   <tbody>
@@ -54,13 +55,14 @@ class Rightlower extends React.Component {
               </div>
               <p />
               <div>
-                <h1> Sold transactions</h1>
+                <div className="headings">SOLD TRANSACTIONS</div>
                 <table class="table table-striped table-hover">
                   <thead>
                     <tr>
                       <th class="text-center" scope="col">Ticker</th>
                       <th class="text-center" scope="col">Price</th>
                       <th class="text-center" scope="col">Quantity</th>
+
                     </tr>
                   </thead>
                   <tbody>

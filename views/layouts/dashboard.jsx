@@ -20,8 +20,10 @@ class Layout extends React.Component {
 			displayRightBody = <Rightbody order={this.props.order} cookies={this.props.cookies} />;
 			displayRightlower = <Rightlower buytransactions={this.props.buytransactions} selltransactions={this.props.selltransactions} cookies={this.props.cookies} />;
 			tradeName = `WELCOME ${this.props.cookies.username.toUpperCase()}`;
-			displayNewOrder =   <div>
-									<h1>New Order</h1>
+			displayNewOrder =   <div class="new-order">
+									<div class="enclosing">
+									<div className="headings">NEW ORDER</div>
+										<p/>
 											<form method="POST" action='/order/new'>
   												<div class="form-group row">
 												    <label for="inputEmail3" class="col-sm-2 col-form-label">Ticker</label>
@@ -67,6 +69,7 @@ class Layout extends React.Component {
 												    </div>
 												 </div>
 											</form>
+										</div>
 								</div>;
 		}
 
@@ -78,6 +81,7 @@ class Layout extends React.Component {
 					<title>{this.props.title}</title>
 					<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"></link>
 					<link rel="stylesheet" type="text/css" href="/style.css"></link>
+					<link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet"/>
 				</head>
 				<body>
 					<nav className="navbar navbar-expand-md navbar-light bg-light">
@@ -90,26 +94,33 @@ class Layout extends React.Component {
 						</div>
 					</nav>
 
-
+					<p/>
 					<div className='container'>
                         <div className='row'>
                             <div className='col-lg-7 col-md-12 col-sm-12 col-xs-12'>
-                                <div id="search-form">
-                      				<div>Check ticker for 5min LIVE data</div>
-                                    <input id="search-stock" type="search" placeholder="Enter Currency Pair" maxlength="6"/>
-                                    <button id="submit">Submit</button>
-                                </div>
+
+                                <div className="headings">GRAPH TICKER</div>
+                                <form id="search-form">
+                                <div class="input-group md-4">
+									<input type="search" id="search-stock" class="form-control" placeholder="Enter Currency Pair for 5min LIVE data" aria-label="Currency pair" aria-describedby="basic-addon2" maxlength="6"/>
+									<div class="input-group-append md-2">
+									<button class="btn btn-secondary" type="submit">Submit</button>
+									</div>
+								</div>
+								</form>
                                 <div id="myDiv"></div>
                                 {displayNewOrder}
                             </div>
                         	<div className='col-lg-5 col-md-12 col-sm-12 col-xs-12'>
-                        		<div>
-                                	<div>Check active order</div>
-                                	<form id="my-form">
-                                		<input id="input-ticker" type="search" placeholder="Enter Currency Pair" maxlength="6"/>
-                                		<input type="submit" value="Submit" />
-                                	</form>
-                                </div>
+                        		<div className="headings">ORDERS</div>
+                        		<form id="my-form">
+                                <div class="input-group md-4">
+									<input type="text" id="input-ticker" class="form-control" placeholder="Enter Currency Pair" aria-label="Currency pair" aria-describedby="basic-addon2" maxlength="6"/>
+									<div class="input-group-append md-2">
+									<button class="btn btn-secondary" type="submit">Submit</button>
+									</div>
+								</div>
+								</form>
                                 <p/>
                                 <div id="ordertable">
                                 	<table className ="table table-striped table-hover">
@@ -126,10 +137,12 @@ class Layout extends React.Component {
                                 </div>
 							</div>
                         </div>
+                        <p/>
                         <div class="row">
-                        	<div>
+                        	<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
             					{displayRightBody}
-            					<p/>
+            				</div>
+            				<div class="col-lg-7 col-md-12 col-sm-12 col-xs-12">
             					{displayRightlower}
                             </div>
                         </div>

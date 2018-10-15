@@ -16,31 +16,65 @@ class Header extends React.Component {
         </html>
         )
     }
+    // else {
+    //   return (
+    //     <html>
+    //       <div>
+    //         <span>
+    //           <form className="form-inline" method="POST" action="/users/login">
+    //               <span>
+    //                 <input class="login-control" name="name" type="text" placeholder="Name"/> &nbsp;
+    //               </span>
+    //               <span>
+    //                 <input class="login-control" name="password" type="Password" placeholder="Password"/> &nbsp;
+    //               </span>
+    //             <button class="btn btn-secondary btn-sm md-2" type="submit">Login</button>
+    //           </form>
+    //           </span>
+    //           &nbsp;
+    //           <span>
+    //           <form className="form-inline" method="GET" action='/users/new'>
+    //             <button class="btn btn-secondary btn-sm md-2" type="submit">Register</button>
+    //           </form>
+    //           </span>
+    //         </div>
+    //       </html>
+    //   );
+    // }
+
+
+
     else {
       return (
         <html>
           <div>
-            <span>
-              <form className="form-inline" method="POST" action="/users/login">
-                  <span>
-                    <input class="login-control" name="name" type="text" placeholder="Name"/> &nbsp;
-                  </span>
-                  <span>
-                    <input class="login-control" name="password" type="Password" placeholder="Password"/> &nbsp;
-                  </span>
-                <button class="btn btn-secondary btn-sm md-2" type="submit">Login</button>
-              </form>
+              <span class="join-reg">
+                <form method="POST" action="/users/login">
+                  <div class="input-group md-4">
+                    <input class="form-control" name="name" type="text" placeholder="Name" aria-label="name" aria-describedby="basic-addon2"/> 
+                    <div class="input-group-append md-2">
+                    <input class="form-control" name="password" type="Password" placeholder="Password" aria-label="password" aria-describedby="basic-addon2"/> 
+                    </div>
+                    <div class="input-group-append md-2">
+                    <button class="btn btn-secondary btn-sm md-2" type="submit">Login</button>
+                    </div>
+                  </div>
+                </form>
               </span>
-              &nbsp;
-              <span>
-              <form className="form-inline" method="GET" action='/users/new'>
-                <button class="btn btn-secondary btn-sm md-2" type="submit">Register</button>
-              </form>
+              <span>&nbsp;</span>
+              <span class="join-reg">
+                <form method="GET" action='/users/new'>
+                <div class="input-group-append md-2">
+                  <button class=" btn btn-secondary btn-md" type="submit">Register</button>
+                </div>
+                </form>
               </span>
             </div>
           </html>
       );
     }
+
+
   }
 }
 

@@ -30,7 +30,7 @@ class RightBody extends React.Component {
     return (
           <html>
             <div>
-              <h1>Order history</h1>
+              <div className="headings">ORDER HISTORY</div>
               <div>
                     <select class ="select" id='orderticker'>
                         <option value='all'>Show All Ticker</option>

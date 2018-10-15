@@ -3,7 +3,7 @@ module.exports = (dbPoolInstance) => {
 	const indexbuy = (userid, callback) => {
 		
 		const queryString = 
-		`SELECT users.id, transactions.b_orderid AS buy_orderid, transactions.price AS price, transactions.qty AS qty, transactions.ticker AS ticker FROM transactions
+		`SELECT users.id, transactions.b_orderid AS buy_orderid, transactions.price AS price, transactions.qty AS qty, transactions.ticker AS ticker, transactions.created_at AS date FROM transactions
 		INNER JOIN orders 
 		ON (transactions.b_orderid = orders.id)
 		INNER JOIN users
@@ -21,7 +21,7 @@ module.exports = (dbPoolInstance) => {
 	const indexsell = (userid, callback) => {
 		
 		const queryString = 
-		`SELECT users.id, transactions.a_orderid AS sell_orderid, transactions.price AS price, transactions.qty AS qty, transactions.ticker AS ticker FROM transactions
+		`SELECT users.id, transactions.a_orderid AS sell_orderid, transactions.price AS price, transactions.qty AS qty, transactions.ticker AS ticker, transactions.created_at AS date FROM transactions
 		INNER JOIN orders 
 		ON (transactions.a_orderid = orders.id)
 		INNER JOIN users

@@ -14,7 +14,7 @@ var trace = {
 	type: 'candlestick',
 };
 
-$("#submit").on("click", function(event){
+$("#search-form").submit(function(event){
 	curPair = $("#search-stock").val();
 	let from = curPair.substring(0,3);
 	let to  = curPair.substring(3,);
@@ -24,6 +24,7 @@ $("#submit").on("click", function(event){
 	ajaxPull(from, to);
 	var startInterval = setInterval(function(){ajaxPull(from, to)}, 300000); 
 })
+
 
 $('#my-form').submit(function(event){
 	value = $('#input-ticker').val().toUpperCase();
@@ -77,8 +78,8 @@ function ajaxPull(from, to){
 function ajaxpullTicker(value) {
 	$.ajax({
 		type: 'GET',
-		// url: 'http://localhost:3000/orders',
-		url: 'https://enigmatic-basin-19796.herokuapp.com/orders',
+		url: 'http://localhost:3000/orders',
+		//url: 'https://enigmatic-basin-19796.herokuapp.com/orders',
 		success: function(data) {
 			console.log(data);
 			var html = '';
@@ -104,8 +105,8 @@ function ajaxpullTicker(value) {
 function ajaxpullAll() {
 	$.ajax({
 		type: 'GET',
-		url: 'https://enigmatic-basin-19796.herokuapp.com/orders',
-		//url: 'http://localhost:3000/orders',
+		//url: 'https://enigmatic-basin-19796.herokuapp.com/orders',
+		url: 'http://localhost:3000/orders',
 		success: function(data) {
 			console.log(data);
 			var html = '';
