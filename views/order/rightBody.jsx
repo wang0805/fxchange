@@ -31,6 +31,14 @@ class RightBody extends React.Component {
           <html>
             <div>
               <h1>Order history</h1>
+              <div>
+                    <select id='orderstatus'>
+                        <option value='all'>Show all</option>
+                        <option value='filled'>Filled</option>
+                        <option value='active'>Active</option>
+                        <option value='cancelled'>Cancelled</option>
+                    </select>
+              </div>
               <table className ="table table-striped table-hover">
                 <tread>
                   <th class="text-center" scope="col">Ticker</th>

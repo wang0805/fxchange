@@ -14,7 +14,6 @@ class DefaultLayout extends React.Component {
 				</head>
 				<body>
 					<div>
-					<h1>{this.props.subtitle}</h1>
 						{this.props.children}
 					</div>
 

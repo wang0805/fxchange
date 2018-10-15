@@ -125,15 +125,50 @@ editStuff();
 ajaxPull('usd', 'sgd');
 ajaxpullAll();
 
+$('#orderstatus').change(function(event){
+	if($('#orderstatus').val() === 'all'){
+		showAll('all');
+	}
+	if($('#orderstatus').val() === 'filled'){
+		sortBy('filled');
+	}
+	else if($('#orderstatus').val() === 'active'){
+		sortBy('active');
+	}
+	else if($('#orderstatus').val() === 'cancelled'){
+		sortBy('cancelled');
+	}
+})
+
+
 
 //document on load close
 };
 // other functions
 function editStuff() {
-    for ( i = 0; i < document.getElementsByClassName('orderstatus').length; i++ ) {
+    for ( let i = 0; i < document.getElementsByClassName('orderstatus').length; i++ ) {
         if ( document.getElementsByClassName('orderstatus')[i].textContent != 'active' ) {
             document.getElementsByClassName('edit')[i].textContent = "";
             document.getElementsByClassName('cancel')[i].textContent = "";
         }
     }
+}
+
+function sortBy(sort){
+	for(let i=0; document.getElementsByClassName('orderstatus').length; i++) {
+		if(document.getElementsByClassName('orderstatus')[i].textContent != sort){
+			document.getElementsByClassName('orderstatus')[i].parentElement.style.display ="none";
+		}
+		else {
+			document.getElementsByClassName('orderstatus')[i].parentElement.style.display ="table-row";
+		}
+	}
+}
+
+function showAll(sort){
+	for(let i=0; document.getElementsByClassName('orderstatus').length; i++) {
+		if(document.getElementsByClassName('orderstatus')[i].textContent != sort){
+			document.getElementsByClassName('orderstatus')[i].parentElement.style.display ="table-row";
+		}
+	}
 }

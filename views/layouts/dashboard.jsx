@@ -22,26 +22,54 @@ class Layout extends React.Component {
 			tradeName = `WELCOME ${this.props.cookies.username.toUpperCase()}`;
 			displayNewOrder =   <div>
 									<h1>New Order</h1>
-									<form method="POST" action='/order/new'>
-										<input name="ticker" placeholder="Enter ticker"/>
-										<input name="price" placeholder="Enter price" />
-										<input name="qty" placeholder="Enter quantity" />
-										<input name="user_id" value={this.props.cookies.user_id} type="hidden"/>
-										<p/>
-										<div class="form-check form-check-inline">
-											<input class="form-check-input" name="ordertype" type="checkbox" id="inlineCheckbox1" value="B"/>
-											<label class="form-check-label" for="inlineCheckbox1">BUY</label>
-										</div>
-										<div class="form-check form-check-inline">
-											<input class="form-check-input" name="ordertype" type="checkbox" id="inlineCheckbox2" value="A"/>
-											<label class="form-check-label" for="inlineCheckbox2">SELL</label>
-										</div>
-										<p/>
-										<input class="btn btn-primary mb-2" type="submit" value="Submit"/>
-									</form>
+											<form method="POST" action='/order/new'>
+  												<div class="form-group row">
+												    <label for="inputEmail3" class="col-sm-2 col-form-label">Ticker</label>
+												    <div class="col-sm-5">
+												      <input name="ticker" type="text" class="form-control" id="inputEmail3" placeholder="Enter Ticker" />
+												    </div>
+  												</div>
+												  <div class="form-group row">
+												    <label for="inputPrice3" class="col-sm-2 col-form-label">Price</label>
+												    <div class="col-sm-5">
+												      <input name="price" type="text" class="form-control" id="inputPrice3" placeholder="Enter Price" />
+												    </div>
+												  </div>
+												 <div class="form-group row">
+												    <label for="inputQty3" class="col-sm-2 col-form-label">Qty</label>
+												    <div class="col-sm-5">
+												      <input name="qty" type="text" class="form-control" id="inputQty3" placeholder="Enter Quantity" />
+												    </div>
+												 </div>
+												 <input name="user_id" value={this.props.cookies.user_id} type="hidden"/>
+												 <fieldset class="form-group">
+												    <div class="row">
+												      <legend class="col-form-label col-sm-2 pt-0">Bid/Ask</legend>
+												      <div class="col-sm-5">
+												        <div class="form-check">
+												          <input class="form-check-input" name="ordertype" type="radio" id="gridRadios1" value="B" checked />
+												          <label class="form-check-label" for="gridRadios1">
+												            BUY
+												          </label>
+												        </div>
+												        <div class="form-check">
+												          <input class="form-check-input" name="ordertype" type="radio" id="gridRadios2" value="A" />
+												          <label class="form-check-label" for="gridRadios2">
+												            Sell
+												          </label>
+												        </div>
+												      </div>
+												    </div>
+												 </fieldset>
+												 <div class="form-group row">
+												    <div class="col-sm-5">
+												      <button type="submit" class="btn btn-primary">Submit Order</button>
+												    </div>
+												 </div>
+											</form>
 								</div>;
 		}
-		
+
 		return (
 			<html>
 				<head> 
