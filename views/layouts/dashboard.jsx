@@ -11,33 +11,101 @@ class Layout extends React.Component {
 
 		let displayRightBody;
 		let displayRightlower;
+		let displayNewOrder;
+		let tradeName = "TRADE";
 
 		console.log("this props cookies check: ", this.props.cookies);
 
 		if (this.props.cookies.logged_in === sha256(SALT+this.props.cookies.user_id)) {
 			displayRightBody = <Rightbody order={this.props.order} cookies={this.props.cookies} />;
 			displayRightlower = <Rightlower buytransactions={this.props.buytransactions} selltransactions={this.props.selltransactions} cookies={this.props.cookies} />;
+			tradeName = `WELCOME ${this.props.cookies.username.toUpperCase()}`;
+			displayNewOrder =   <div>
+									<h1>New Order</h1>
+									<form method="POST" action='/order/new'>
+										<input name="ticker" placeholder="Enter ticker"/>
+										<input name="price" placeholder="Enter price" />
+										<input name="qty" placeholder="Enter quantity" />
+										<input name="user_id" value={this.props.cookies.user_id} type="hidden"/>
+										<p/>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" name="ordertype" type="checkbox" id="inlineCheckbox1" value="B"/>
+											<label class="form-check-label" for="inlineCheckbox1">BUY</label>
+										</div>
+										<div class="form-check form-check-inline">
+											<input class="form-check-input" name="ordertype" type="checkbox" id="inlineCheckbox2" value="A"/>
+											<label class="form-check-label" for="inlineCheckbox2">SELL</label>
+										</div>
+										<p/>
+										<input class="btn btn-primary mb-2" type="submit" value="Submit"/>
+									</form>
+								</div>;
 		}
 		
 		return (
 			<html>
 				<head> 
+					<meta charset="UTF-8"/>
+					<meta name="viewport" content="width = device-width, initial-scale=1"/>
 					<title>{this.props.title}</title>
 					<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"></link>
 					<link rel="stylesheet" type="text/css" href="/style.css"></link>
 				</head>
 				<body>
-					<Headerlink cookies={this.props.cookies} />
-					<p />
-					<div id="search-form">
-						<input id="search-stock" type="search" placeholder="Enter Currency Pair" maxlength="6"/>
-						<button id="submit">submit</button>
-					</div>
-					<div id="myDiv"></div>
-					<p/>
-					{displayRightBody}
-					<p/>	
-					{displayRightlower}
+					<nav className="navbar navbar-expand-md navbar-light bg-light">
+						<div className='container'>
+							<a className="navbar-brand mb-0 h1" href="/">{tradeName}</a>
+							<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+								<span className="navbar-toggler-icon"></span>
+							</button>
+							<Headerlink cookies={this.props.cookies} />
+						</div>
+					</nav>
+
+
+					<div className='container'>
+                        <div className='row'>
+                            <div className='col-lg-7 col-md-12 col-sm-12 col-xs-12'>
+                                <div id="search-form">
+                      				<div>Check ticker trend</div>
+                                    <input id="search-stock" type="search" placeholder="Enter Currency Pair" maxlength="6"/>
+                                    <button id="submit">Submit</button>
+                                </div>
+                                <div id="myDiv"></div>
+                                {displayNewOrder}
+                            </div>
+                        	<div className='col-lg-5 col-md-12 col-sm-12 col-xs-12'>
+                        		<div>
+                                	<div>Check active order</div>
+                                	<form id="my-form">
+                                		<input id="input-ticker" type="search" placeholder="Enter Currency Pair" maxlength="6"/>
+                                		<input type="submit" value="Submit" />
+                                	</form>
+                                </div>
+                                <p/>
+                                <div id="ordertable">
+                                	<table className ="table table-striped table-hover">
+					                  <tread>
+					                    <th class="text-center" scope="col">Ticker</th>
+					                    <th class="text-center" scope="col">Buy/Sell</th>
+					                    <th class="text-center" scope="col">Price</th>
+					                    <th class="text-center" scope="col">Quantity</th>
+					                  </tread>
+					                  <tbody id="insert-table">
+
+					                  </tbody>
+					                </table>
+                                </div>
+							</div>
+                        </div>
+                        <div class="row">
+                        	<div>
+            					{displayRightBody}
+            					<p/>
+            					{displayRightlower}
+                            </div>
+                        </div>
+                    </div>
 
 					<script type="text/javascript" src="/script.js"></script>
 					<script

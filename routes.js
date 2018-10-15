@@ -16,6 +16,7 @@ module.exports = (app, db) => {
   app.get('/users/:id/order/:orderid/cancel', order.cfmcancel);
   app.get('/users/:id', users.layout);
   app.get('/users', users.layout);
+  app.get('/orders', order.activeIndex)
 
   app.post('/users', users.create);
   app.post('/users/logout', users.logout);

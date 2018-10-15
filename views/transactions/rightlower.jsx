@@ -11,9 +11,9 @@ class Rightlower extends React.Component {
       if(parseInt(this.props.cookies.user_id) === userIdB && this.props.cookies.logged_in === sha256(SALT+this.props.cookies.user_id)) {
         return (
           <tr>
-              <th scope="row">{buy.ticker}</th>
-              <td>{buy.price}</td>
-              <td>{buy.qty}</td>
+              <th class="text-center" scope="row">{buy.ticker}</th>
+              <td class="text-center">{buy.price}</td>
+              <td class="text-center">{buy.qty}</td>
           </tr> 
         )
       }
@@ -25,9 +25,9 @@ class Rightlower extends React.Component {
       if(parseInt(this.props.cookies.user_id) === userIdS && this.props.cookies.logged_in === sha256(SALT+this.props.cookies.user_id)) {
         return (
           <tr>
-              <th scope="row">{sell.ticker}</th>
-              <td>{sell.price}</td>
-              <td>{sell.qty}</td>
+              <th class="text-center" scope="row">{sell.ticker}</th>
+              <td class="text-center">{sell.price}</td>
+              <td class="text-center">{sell.qty}</td>
           </tr> 
         )
       }
@@ -39,12 +39,12 @@ class Rightlower extends React.Component {
               <p/>
               <div>
                 <h1>Bought transactions</h1>
-                <table class="table table-striped">
+                <table class="table table-striped table-hover">
                   <thead>
                     <tr>
-                      <th scope="col">Ticker</th>
-                      <th scope="col">Price</th>
-                      <th scope="col">Quantity</th>
+                      <th class="text-center" scope="col">Ticker</th>
+                      <th class="text-center" scope="col">Price</th>
+                      <th class="text-center" scope="col">Quantity</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -55,12 +55,12 @@ class Rightlower extends React.Component {
               <p />
               <div>
                 <h1> Sold transactions</h1>
-                <table class="table table-striped">
+                <table class="table table-striped table-hover">
                   <thead>
                     <tr>
-                      <th scope="col">Ticker</th>
-                      <th scope="col">Price</th>
-                      <th scope="col">Quantity</th>
+                      <th class="text-center" scope="col">Ticker</th>
+                      <th class="text-center" scope="col">Price</th>
+                      <th class="text-center" scope="col">Quantity</th>
                     </tr>
                   </thead>
                   <tbody>

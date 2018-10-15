@@ -1,4 +1,4 @@
-.cancel {
+/*.cancel {
 	background: transparent;
 	border: none;
 	margin: 0;
@@ -6,7 +6,26 @@
 	text-decoration: underline;
 	color: blue;
 }
+*/
 
 #myDiv {
-	width: 100vw;
+	width: 100%;
+}
+
+html, body {
+	overflow-x: hidden;
+}
+
+
+/*#ordertable {
+	display: none;
+}*/
+
+span {
+	display: inline-block;
+}
+
+*/
+.login-control {
+	margin-right: 5px;
 }

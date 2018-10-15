@@ -5,6 +5,20 @@ const SALT = "fxchange";
 module.exports = (db) => {
 
 	//var orderStatus = ['active', 'filled', 'cancelled'];
+	const activeIndex = (request, response) => {
+
+		db.order.activeIndex( (error, result) => {
+			if (error) {
+				console.log('error', error);
+				response.sendStatus(500);
+			}
+			else {
+				console.log("active index result rows: ", result.rows)
+				//response.render('order/activeindex', {orders: result.rows});
+				response.json(result.rows);
+			}
+		})
+	}
 
 	const create = (request, response) => {
 
@@ -34,7 +48,7 @@ module.exports = (db) => {
 
 							console.log("array object console log:", arrayObj[i]);
 
-							if(arrayObj[i].ticker === request.body.ticker && arrayObj[i].ordertype != request.body.ordertype && arrayObj[i].price === request.body.price && arrayObj[i].orderstatus==='active') {
+							if(arrayObj[i].ticker === request.body.ticker.toUpperCase() && arrayObj[i].ordertype != request.body.ordertype && arrayObj[i].price === request.body.price && arrayObj[i].orderstatus==='active') {
 
 								if(arrayObj[i].qty > qtytrans) {
 									
@@ -57,7 +71,7 @@ module.exports = (db) => {
 												else {
 													//create entry in transactions if user B and FILLED
 													if(request.body.ordertype === 'B'){
-														db.order.createTrans(arrayObj[i].id, insert_id, qtytrans, request.body.price, request.body.ticker, (error, result) => {
+														db.order.createTrans(arrayObj[i].id, insert_id, qtytrans, request.body.price, request.body.ticker.toUpperCase(), (error, result) => {
 															if (error) {
 																console.log('error', error);
 																response.sendStatus(500);
@@ -66,7 +80,7 @@ module.exports = (db) => {
 													}
 													//create entry in transactions if user Sell and FILLED
 													else if (request.body.ordertype === 'A'){
-														db.order.createTrans(insert_id, arrayObj[i].id, qtytrans, request.body.price, request.body.ticker, (error, result) => {
+														db.order.createTrans(insert_id, arrayObj[i].id, qtytrans, request.body.price, request.body.ticker.toUpperCase(), (error, result) => {
 															if (error) {
 																console.log('error', error);
 																response.sendStatus(500);
@@ -98,7 +112,7 @@ module.exports = (db) => {
 												}
 												else {
 													if(request.body.ordertype === 'B'){
-														db.order.createTrans(arrayObj[i].id, insert_id, arrayObj[i].qty, request.body.price, request.body.ticker, (error, result) => {
+														db.order.createTrans(arrayObj[i].id, insert_id, arrayObj[i].qty, request.body.price, request.body.ticker.toUpperCase(), (error, result) => {
 															if (error) {
 																console.log('error', error);
 																response.sendStatus(500);
@@ -107,7 +121,7 @@ module.exports = (db) => {
 													}
 													//create entry in transactions if user Sell and FILLED
 													else if (request.body.ordertype === 'A'){
-														db.order.createTrans(insert_id, arrayObj[i].id, arrayObj[i].qty, request.body.price, request.body.ticker, (error, result) => {
+														db.order.createTrans(insert_id, arrayObj[i].id, arrayObj[i].qty, request.body.price, request.body.ticker.toUpperCase(), (error, result) => {
 															if (error) {
 																console.log('error', error);
 																response.sendStatus(500);
@@ -209,6 +223,7 @@ module.exports = (db) => {
 	*/
 
 	return {
+		activeIndex,
 		create,
 		edit,
 		update,

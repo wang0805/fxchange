@@ -5,6 +5,8 @@ class DefaultLayout extends React.Component {
 		return (
 			<html>
 				<head>
+					<meta charset="UTF-8"/>
+					<meta name="viewport" content="width = device-width, inital-scale=1"/>
 					<title>{this.props.title}</title>
 					<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"></link>
 					<link rel="stylesheet" type="text/css" href="/style.css"></link>

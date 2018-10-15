@@ -1,5 +1,14 @@
 module.exports = (dbPoolInstance) => {
 
+	const activeIndex = (callback) => {
+		const query = "SELECT id, ticker, ordertype, price, qty FROM orders WHERE orderstatus='active' ORDER BY ticker, ordertype, price DESC;"
+
+		dbPoolInstance.query(query, (error, result) => {
+			callback(error, result);
+			//console.log("select all for active indexs: ",result.rows);
+		})
+	}
+
 	const index = (callback) => {
 		//asc so as to employ the FIFO logic, if not each time an order is edited it is pushed dowwnwards in SQL
 		const query = "SELECT * FROM orders ORDER BY id ASC";
@@ -13,7 +22,7 @@ module.exports = (dbPoolInstance) => {
 	const create = (newObj, callback) => {
 
 		const query = "INSERT INTO orders (ticker, ordertype, price, qty, orderstatus, user_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;";
-		const values = [newObj.ticker, newObj.ordertype, newObj.price, newObj.qty, 'active', newObj.user_id];
+		const values = [newObj.ticker.toUpperCase(), newObj.ordertype, newObj.price, newObj.qty, 'active', newObj.user_id];
 
 		dbPoolInstance.query(query, values, (error, result) => {
 			callback(error, result);
@@ -112,6 +121,7 @@ module.exports = (dbPoolInstance) => {
 	}
 
 	return {
+		activeIndex,
 		index,
 		create,
 		edit,

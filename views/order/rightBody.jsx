@@ -15,13 +15,13 @@ class RightBody extends React.Component {
       if(parseInt(this.props.cookies.user_id) === userId && this.props.cookies.logged_in === sha256(SALT+this.props.cookies.user_id)) {
         return (
           <tr>
-              <th scope="row">{order.ticker}</th>
-              <td>{order.ordertype}</td>
-              <td>{order.price}</td>
-              <td>{order.qty}</td>
-              <td>{order.orderstatus}</td>
-              <td><a href={aTag}>Edit</a></td>
-              <td><a href={aTagC}>Cancel</a></td>
+              <th class="text-center" scope="row">{order.ticker}</th>
+              <td class="text-center">{order.ordertype}</td>
+              <td class="text-center">{order.price}</td>
+              <td class="text-center">{order.qty}</td>
+              <td className='orderstatus text-center'>{order.orderstatus}</td>
+              <td className='edit text-center'><a href={aTag}>Edit</a></td>
+              <td className='cancel text-center'><a href={aTagC}>Cancel</a></td>
           </tr> 
         )
       }
@@ -30,44 +30,21 @@ class RightBody extends React.Component {
     return (
           <html>
             <div>
-              <div>
-                <h1>New Order</h1>
-                <form method="POST" action='/order/new'>
-                  <input name="ticker" placeholder="Enter ticker"/>
-                  <input name="price" placeholder="Enter price" />
-                  <input name="qty" placeholder="Enter quantity" />
-                  <input name="user_id" value={this.props.cookies.user_id} type="hidden"/>
-                  <p/>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="ordertype" type="checkbox" id="inlineCheckbox1" value="B"/>
-                    <label class="form-check-label" for="inlineCheckbox1">BUY</label>
-                  </div>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="ordertype" type="checkbox" id="inlineCheckbox2" value="A"/>
-                    <label class="form-check-label" for="inlineCheckbox2">SELL</label>
-                  </div>
-                  <p/>
-                  <input class="btn btn-primary mb-2" type="submit" value="Submit"/>
-                </form>
-              </div>
-              <p/>
-              <div>
-                <h1>Current orders</h1>
-                <table className ="table table-striped">
-                  <tread>
-                    <th scope="col">Ticker</th>
-                    <th scope="col">Buy/Sell</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Quantity</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Edit</th>
-                    <th scope="col">Cancel</th>
-                  </tread>
-                  <tbody>
-                    {orders}
-                  </tbody>
-                </table>
-              </div>
+              <h1>Order history</h1>
+              <table className ="table table-striped table-hover">
+                <tread>
+                  <th class="text-center" scope="col">Ticker</th>
+                  <th class="text-center" scope="col">Buy/Sell</th>
+                  <th class="text-center" scope="col">Price</th>
+                  <th class="text-center" scope="col">Quantity</th>
+                  <th class="text-center" scope="col">Status</th>
+                  <th class="text-center" scope="col">Edit</th>
+                  <th class="text-center" scope="col">Cancel</th>
+                </tread>
+                <tbody>
+                  {orders}
+                </tbody>
+              </table>
             </div>
           </html>
     );

@@ -1,6 +1,8 @@
 //wait for whole document to load up before loading javascript
 window.onload = function(){
 
+
+var value;
 var apiKey = "V9CIRQRJSAFI99RM";
 var curPair;
 var trace = {
@@ -17,7 +19,16 @@ $("#submit").on("click", function(event){
 	let from = curPair.substring(0,3);
 	let to  = curPair.substring(3,);
 	console.log(curPair);
+	event.preventDefault();
+
 	ajaxPull(from, to);
+})
+
+$('#my-form').submit(function(event){
+	value = $('#input-ticker').val().toUpperCase();
+	event.preventDefault();
+	//$("#ordertable").show();
+	ajaxpullTicker(value);
 })
 
 function ajaxPull(from, to){
@@ -40,7 +51,7 @@ function ajaxPull(from, to){
 				xaxis: 'x',
 				yaxis: 'y'
 			};
-			//1min data updates every minute
+			
 			$.each(data1, function(key,value){
 			trace.x.push(key);
 			trace.close.push(data1[key]["4. close"]);
@@ -55,11 +66,74 @@ function ajaxPull(from, to){
 			console.log("success");
 		}, // need a comma btwn success and error callback
 		error: function(){
-			alert("errror");
+			alert("error pulling graph");
 		}
 	});
 }
 
+function ajaxpullTicker(value) {
+	$.ajax({
+		type: 'GET',
+		url: 'http://localhost:3000/orders',
+		success: function(data) {
+			console.log(data);
+			var html = '';
+			for (let i=0; i<data.length; i++){
+				if(data[i].ticker === value){
+					html += `<tr>
+					<td class="text-center">${data[i].ticker}</td>
+					<td class="text-center">${data[i].ordertype}</td>
+					<td class="text-center">${data[i].price}</td>
+					<td class="text-center">${data[i].qty}</td>
+					</tr>`
+				}
+			}
+			$('#insert-table').html(html);
+			console.log("success")
+		}, // need a comma btwn success and error callback
+		error: function(){
+			alert("errror");
+		}
+	})
+}
+
+function ajaxpullAll() {
+	$.ajax({
+		type: 'GET',
+		url: 'http://localhost:3000/orders',
+		success: function(data) {
+			console.log(data);
+			var html = '';
+			for (let i=0; i<data.length; i++){
+				html += `<tr>
+				<td class="text-center">${data[i].ticker}</td>
+				<td class="text-center">${data[i].ordertype}</td>
+				<td class="text-center">${data[i].price}</td>
+				<td class="text-center">${data[i].qty}</td>
+				</tr>`
+			}
+			$('#insert-table').html(html);
+			console.log("success")
+		}, // need a comma btwn success and error callback
+		error: function(){
+			alert("errror");
+		}
+	})
+}
+
+editStuff();
+ajaxPull('usd', 'sgd');
+ajaxpullAll();
+
 
 //document on load close
 };
+// other functions
+function editStuff() {
+    for ( i = 0; i < document.getElementsByClassName('orderstatus').length; i++ ) {
+        if ( document.getElementsByClassName('orderstatus')[i].textContent != 'active' ) {
+            document.getElementsByClassName('edit')[i].textContent = "";
+            document.getElementsByClassName('cancel')[i].textContent = "";
+        }
+    }
+}

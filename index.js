@@ -1,6 +1,7 @@
 const express = require('express');
 const methodOverride = require('method-override');
 const cookieParser = require('cookie-parser');
+const http = require('http');
 const db = require('./db'); 
 
 /**
@@ -42,7 +43,9 @@ app.get('/', (request, response) => {
  */
 const PORT = process.env.PORT || 3000;
 
-const server = app.listen(PORT, () => console.log('~~~ Tuning in to the waves of port '+PORT+' ~~~'));
+const server = http.Server(app);
+
+server.listen(PORT, () => console.log('~~~ Tuning in to the waves of port '+PORT+' ~~~'));
 
 // Run clean up actions when server shuts down
 server.on('close', () => {
