@@ -8,18 +8,18 @@
 }
 */
 
+/*#ordertable {
+	display: none;
+}*/
+
 #myDiv {
 	width: 100%;
+	opacity: 0.65;
 }
 
 html, body {
 	overflow-x: hidden;
 }
-
-
-/*#ordertable {
-	display: none;
-}*/
 
 .join-reg {
 	display: inline-block;
@@ -35,7 +35,12 @@ html, body {
 }
 
 .headings {
-	font-family: 'Alegreya', serif;
+	font-family: 'Poiret One', cursive;
 	font-size: 30px;
 	font-weight: bold;
+}
+
+body {
+	background-image: url("images/background.jpg");
+	background-repeat: repeat;
 }

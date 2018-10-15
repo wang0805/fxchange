@@ -8,6 +8,7 @@ module.exports = (db) => {
    * Controller logic
    * ===========================================
    */
+
   const newForm = (request, response) => {
     response.render('user/newUser');
   };
@@ -44,7 +45,6 @@ module.exports = (db) => {
                 else {
                   let selltransactions = result.rows;
                   console.log("sell order id    :", selltransactions);
-
                   response.render('layouts/dashboard', {order: order, buytransactions: buytransactions, selltransactions: selltransactions, cookies: cookies});
                 }
               })
@@ -109,6 +109,10 @@ module.exports = (db) => {
     response.redirect("/users");    
   }
 
+
+  const profile = (request, response) => {
+    response.send("COMING SOON")
+  }
   /**
    * ===========================================
    * Export controller functions as a module
@@ -119,7 +123,8 @@ module.exports = (db) => {
     create,
     login,
     logout,
-    layout
+    layout,
+    profile
   };
 
 };

@@ -5,6 +5,18 @@ var Headerlink = require('../user/header');
 var Rightbody = require('../order/rightBody');
 var Rightlower = require('../transactions/rightlower');
 
+class Profile extends React.Component {
+
+	render () {
+
+		if (this.props.cookies.logged_in === sha256(SALT+this.props.cookies.user_id)) {
+			return <a className="nav-item nav-link" href={"/users/"+this.props.cookies.user_id+"/profile"}> PROFILE ({this.props.cookies.username.toUpperCase()})</a>
+		} else {
+			return <span />
+		}
+	}
+}
+
 class Layout extends React.Component {
 
 	render() {
@@ -81,7 +93,7 @@ class Layout extends React.Component {
 					<title>{this.props.title}</title>
 					<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"></link>
 					<link rel="stylesheet" type="text/css" href="/style.css"></link>
-					<link href="https://fonts.googleapis.com/css?family=Alegreya" rel="stylesheet"/>
+					<link href="https://fonts.googleapis.com/css?family=Poiret+One" rel="stylesheet"/>
 				</head>
 				<body>
 					<nav className="navbar navbar-expand-md navbar-light bg-light">
@@ -90,7 +102,13 @@ class Layout extends React.Component {
 							<button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 								<span className="navbar-toggler-icon"></span>
 							</button>
+							<div className="collapse navbar-collapse" id="navbarSupportedContent">
+							<div className="navbar-nav mr-auto">
+								<Profile cookies={this.props.cookies} />
+							</div>
 							<Headerlink cookies={this.props.cookies} />
+							</div>
+						
 						</div>
 					</nav>
 

@@ -71,6 +71,9 @@ module.exports = (db) => {
 												else {
 													//create entry in transactions if user B and FILLED
 													if(request.body.ordertype === 'B'){
+
+														
+
 														db.order.createTrans(arrayObj[i].id, insert_id, qtytrans, request.body.price, request.body.ticker.toUpperCase(), (error, result) => {
 															if (error) {
 																console.log('error', error);
