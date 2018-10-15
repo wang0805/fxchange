@@ -77,7 +77,8 @@ function ajaxPull(from, to){
 function ajaxpullTicker(value) {
 	$.ajax({
 		type: 'GET',
-		url: 'http://localhost:3000/orders',
+		// url: 'http://localhost:3000/orders',
+		url: 'http://enigmatic-basin-19796.herokuapp.com/orders',
 		success: function(data) {
 			console.log(data);
 			var html = '';
@@ -103,7 +104,8 @@ function ajaxpullTicker(value) {
 function ajaxpullAll() {
 	$.ajax({
 		type: 'GET',
-		url: 'http://localhost:3000/orders',
+		url: 'http://enigmatic-basin-19796.herokuapp.com/orders',
+		//url: 'http://localhost:3000/orders',
 		success: function(data) {
 			console.log(data);
 			var html = '';
@@ -119,7 +121,7 @@ function ajaxpullAll() {
 			console.log("success")
 		}, // need a comma btwn success and error callback
 		error: function(){
-			alert("errror");
+			alert("error pulling order table");
 		}
 	})
 }
