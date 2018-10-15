@@ -62,8 +62,8 @@ class Layout extends React.Component {
 												    </div>
 												 </fieldset>
 												 <div class="form-group row">
-												    <div class="col-sm-5">
-												      <button type="submit" class="btn btn-primary">Submit Order</button>
+												    <div class="col-sm-7">
+												      <button type="submit" class="btn btn-secondary">Submit Order</button>
 												    </div>
 												 </div>
 											</form>

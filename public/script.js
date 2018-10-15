@@ -140,6 +140,24 @@ $('#orderstatus').change(function(event){
 	}
 })
 
+$('#orderticker').change(function(event){
+	if($('#orderticker').val() === 'all'){
+		showAllTicker('all');
+	}
+	if($('#orderticker').val() === 'USDSGD'){
+		sortByTicker('USDSGD');
+	}
+	else if($('#orderticker').val() === 'SGDMYR'){
+		sortByTicker('SGDMYR');
+	}
+	else if($('#orderticker').val() === 'SGDTWD'){
+		sortByTicker('SGDTWD');
+	}
+	else if($('#orderticker').val() === 'SGDTHB'){
+		sortByTicker('SGDTHB');
+	}
+})
+
 
 
 //document on load close
@@ -165,10 +183,29 @@ function sortBy(sort){
 	}
 }
 
+function sortByTicker(sort){
+	for(let i=0; document.getElementsByClassName('orderticker').length; i++) {
+		if(document.getElementsByClassName('orderticker')[i].textContent != sort){
+			document.getElementsByClassName('orderticker')[i].parentElement.style.display ="none";
+		}
+		else {
+			document.getElementsByClassName('orderticker')[i].parentElement.style.display ="table-row";
+		}
+	}
+}
+
 function showAll(sort){
 	for(let i=0; document.getElementsByClassName('orderstatus').length; i++) {
 		if(document.getElementsByClassName('orderstatus')[i].textContent != sort){
 			document.getElementsByClassName('orderstatus')[i].parentElement.style.display ="table-row";
+		}
+	}
+}
+
+function showAllTicker(sort){
+	for(let i=0; document.getElementsByClassName('orderticker').length; i++) {
+		if(document.getElementsByClassName('orderticker')[i].textContent != sort){
+			document.getElementsByClassName('orderticker')[i].parentElement.style.display ="table-row";
 		}
 	}
 }

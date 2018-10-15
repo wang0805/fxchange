@@ -15,7 +15,7 @@ class RightBody extends React.Component {
       if(parseInt(this.props.cookies.user_id) === userId && this.props.cookies.logged_in === sha256(SALT+this.props.cookies.user_id)) {
         return (
           <tr>
-              <th class="text-center" scope="row">{order.ticker}</th>
+              <th className="orderticker text-center" scope="row">{order.ticker}</th>
               <td class="text-center">{order.ordertype}</td>
               <td class="text-center">{order.price}</td>
               <td class="text-center">{order.qty}</td>
@@ -32,13 +32,22 @@ class RightBody extends React.Component {
             <div>
               <h1>Order history</h1>
               <div>
-                    <select id='orderstatus'>
-                        <option value='all'>Show all</option>
+                    <select class ="select" id='orderticker'>
+                        <option value='all'>Show All Ticker</option>
+                        <option value='USDSGD'>USD/SGD</option>
+                        <option value='SGDMYR'>SGD/MYR</option>
+                        <option value='SGDTWD'>SGD/TWD</option>
+                        <option value='SGDTHB'>SGD/THB</option>
+                    </select>
+                    &nbsp;
+                    <select class="select" id='orderstatus'>
+                        <option value='all'>Show All Status</option>
                         <option value='filled'>Filled</option>
                         <option value='active'>Active</option>
                         <option value='cancelled'>Cancelled</option>
                     </select>
               </div>
+              <p/>
               <table className ="table table-striped table-hover">
                 <tread>
                   <th class="text-center" scope="col">Ticker</th>
