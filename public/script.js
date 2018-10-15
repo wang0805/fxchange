@@ -78,8 +78,8 @@ function ajaxPull(from, to){
 function ajaxpullTicker(value) {
 	$.ajax({
 		type: 'GET',
-		url: 'http://localhost:3000/orders',
-		//url: 'https://enigmatic-basin-19796.herokuapp.com/orders',
+		//url: 'http://localhost:3000/orders',
+		url: 'https://enigmatic-basin-19796.herokuapp.com/orders',
 		success: function(data) {
 			console.log(data);
 			var html = '';
@@ -105,8 +105,8 @@ function ajaxpullTicker(value) {
 function ajaxpullAll() {
 	$.ajax({
 		type: 'GET',
-		//url: 'https://enigmatic-basin-19796.herokuapp.com/orders',
-		url: 'http://localhost:3000/orders',
+		url: 'https://enigmatic-basin-19796.herokuapp.com/orders',
+		//url: 'http://localhost:3000/orders',
 		success: function(data) {
 			console.log(data);
 			var html = '';
