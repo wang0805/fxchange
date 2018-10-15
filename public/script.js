@@ -22,6 +22,7 @@ $("#submit").on("click", function(event){
 	event.preventDefault();
 
 	ajaxPull(from, to);
+	var startInterval = setInterval(function(){ajaxPull(from, to)}, 300000); 
 })
 
 $('#my-form').submit(function(event){
@@ -34,11 +35,13 @@ $('#my-form').submit(function(event){
 function ajaxPull(from, to){
 	$.ajax({
 		type: 'GET',
-		url: `https://www.alphavantage.co/query?function=FX_DAILY&from_symbol=${from}&to_symbol=${to}&apikey=${apiKey}`,
+		//url: `https://www.alphavantage.co/query?function=FX_DAILY&from_symbol=${from}&to_symbol=${to}&apikey=${apiKey}`,
+		url: `https://www.alphavantage.co/query?function=FX_INTRADAY&from_symbol=${from}&to_symbol=${to}&interval=5min&apikey=${apiKey}`,
 		//if successful do the following
 		success: function(data) {
 			console.log(data);
-			var data1 = data["Time Series FX (Daily)"];
+			var data1 = data["Time Series FX (5min)"];
+			//var data1 = data["Time Series FX (Daily)"];
 			//check if API is working
 			console.log("Data:", data1);
 			var trace = {
@@ -92,7 +95,7 @@ function ajaxpullTicker(value) {
 			console.log("success")
 		}, // need a comma btwn success and error callback
 		error: function(){
-			alert("errror");
+			alert("error pulling table");
 		}
 	})
 }
@@ -120,10 +123,6 @@ function ajaxpullAll() {
 		}
 	})
 }
-
-editStuff();
-ajaxPull('usd', 'sgd');
-ajaxpullAll();
 
 $('#orderstatus').change(function(event){
 	if($('#orderstatus').val() === 'all'){
@@ -158,6 +157,9 @@ $('#orderticker').change(function(event){
 	}
 })
 
+editStuff();
+ajaxPull('usd', 'sgd')
+ajaxpullAll();
 
 
 //document on load close
