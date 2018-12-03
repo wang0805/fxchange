@@ -15,6 +15,7 @@ You can see how the web application works below:
 - [NodeJS](http://nodejs.org) - Server-side Javascript
 - [Postgresql](https://www.postgresql.org/) - Object-relational database system
 - [Express](https://expressjs.com/) - Web Framework for Node.js
+- [BootStrap](https://getbootstrap.com/) - Web front-end component library
 
 *Foundational knowledge of Express and PSQL were heavily utilized in this particular project in order to build the matching system. 
 
