@@ -6,16 +6,17 @@ Fxchange is web application inspired from the boom in trading of (back then) ill
 
 You can see how the web application works below:
 
-![GIF](https://github.com/wang0805/tetrisproject/images/01.gif)
+![GIF](https://github.com/wang0805/fxchange/blob/master/public/images/02.gif)
 
-[Link to Game](https://enigmatic-basin-19796.herokuapp.com/)
+[Link to Application](https://enigmatic-basin-19796.herokuapp.com/)
 
 ### Tools being used
-
-- [NodeJS](http://nodejs.org) - Server-side Javascript
-- [Express](https://expressjs.com/) - Web Framework for Node.js
 - [React](https://reactjs.org/) - Templating engine
+- [NodeJS](http://nodejs.org) - Server-side Javascript
 - [Postgresql](https://www.postgresql.org/) - Object-relational database system
+- [Express](https://expressjs.com/) - Web Framework for Node.js
+
+*Foundational knowledge of Express and PSQL were heavily utilized in this particular project in order to build the matching system. 
 
 ### Development Roadmap
 
@@ -27,7 +28,7 @@ You can see how the web application works below:
 - Firstly, when a create order query is executed, an index query is fired to check that order against the active counterparties.
 - Next, if multiple counterparties with the same price is found, the order will match with the first price in the FIFO (first in first out) queue. If the quantity of the counterparty > our quantity, our order is automatically changed to filled. Otherwise, if our quantity cannot be filled by existing orders, then the remaining will spill to a new active order
 - Lastly, if a transaction has occured. It will create a new buy/sell transaction depending on which side we are coming from.
--
+- Edit and delete(cancellation) of orders are made to follow as much as possible, to real electronic trading apps. 
 
 ## Author(s)
 
