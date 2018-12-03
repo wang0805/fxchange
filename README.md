@@ -40,10 +40,10 @@ To clone and run this application, you'll need [Git](https://git-scm.com) and [N
 
 ```bash
 # Clone this repository
-$ git clone https://github.com/wang0805/Fxchange.git
+$ git clone https://github.com/wang0805/fxchange.git
 
 # Go into the repository
-$ cd Fxchange
+$ cd fxchange
 
 # Install dependencies
 $ npm install
