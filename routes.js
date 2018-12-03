@@ -28,3 +28,10 @@ module.exports = (app, db) => {
   app.put('/order/:orderid/cancel', order.cancel);
 
 };
+/*
+routes.js export to index.js 
+models export to db.js
+controllers import from db.js to call db.model.action
+controllers exports to routes
+
+*/
