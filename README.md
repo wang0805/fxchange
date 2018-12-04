@@ -12,6 +12,7 @@ You can see how the web application works below:
 
 ### Tools being used
 - [React](https://reactjs.org/) - Templating engine
+- [JQuery](https://jquery.com/) - JavaScript library
 - [NodeJS](http://nodejs.org) - Server-side Javascript
 - [Postgresql](https://www.postgresql.org/) - Object-relational database system
 - [Express](https://expressjs.com/) - Web Framework for Node.js
